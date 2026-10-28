@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,3 +17,9 @@ Route::prefix('auth')->group(function (): void {
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
+
+Route::apiResource('products', ProductController::class)->only(['index', 'show']);
+
+Route::middleware('auth:sanctum')
+    ->apiResource('products', ProductController::class)
+    ->except(['index', 'show']);
