@@ -1,3 +1,91 @@
+# Cocoa E-commerce Backend
+
+Laravel API backend for the Cocoa E-commerce application.
+
+## Run locally
+
+### Requirements
+
+- PHP 8.3 or newer
+- Composer
+- MySQL 8 or newer
+- Git
+
+### Clone the repository
+
+```bash
+git clone https://github.com/novaandini/cocoa-ecommerce-backend.git
+cd cocoa-ecommerce-backend
+```
+
+### Install the application
+
+```bash
+composer install
+cp .env.example .env
+php artisan key:generate
+```
+
+On Windows PowerShell, copy the environment file with:
+
+```powershell
+Copy-Item .env.example .env
+```
+
+Create a MySQL database named `cocoa_ecommerce`, then update the `DB_*` values in `.env` if your local MySQL credentials differ from the defaults:
+
+```dotenv
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=cocoa_ecommerce
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+Run the migrations and seed the local database:
+
+```bash
+php artisan migrate --seed
+```
+
+Start the development server:
+
+```bash
+php artisan serve
+```
+
+The API is available at `http://localhost:8000/api`.
+
+### Authentication API
+
+- `POST /api/auth/register`
+- `POST /api/auth/login`
+- `POST /api/auth/logout`
+- `POST /api/auth/forgot-password`
+- `POST /api/auth/reset-password`
+
+Product catalog reads are public:
+
+- `GET /api/products`
+- `GET /api/products/{product}`
+
+Product creation, updates, and deletion require a Sanctum bearer token.
+
+### Run tests
+
+```bash
+php artisan test --compact
+```
+
+The test configuration uses an in-memory SQLite database, so the PHP SQLite/PDO SQLite extensions must be enabled.
+
+## Laravel documentation
+
+For general Laravel documentation, visit [laravel.com/docs](https://laravel.com/docs).
+
+---
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
