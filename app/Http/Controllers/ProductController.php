@@ -35,7 +35,10 @@ class ProductController extends Controller
 
     public function update(UpdateProductRequest $request, Product $product): ProductResource
     {
-        $product->update($request->validated());
+        $product->update([
+            ...$request->validated(),
+            'updated_by' => $request->user()->id,
+        ]);
 
         return (new ProductResource($product->refresh()))
             ->additional(['message' => 'Product updated successfully.']);

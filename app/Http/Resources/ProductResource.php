@@ -24,6 +24,7 @@ class ProductResource extends JsonResource
             'price_per_kg' => $this->price_per_kg,
             'image_url' => $this->image_url,
             'is_active' => $this->is_active,
+            'updated_by' => $this->updated_by,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
