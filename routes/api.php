@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
 use App\Http\Middleware\EnsureUserIsAdmin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,11 +21,17 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+Route::middleware(['auth:sanctum', EnsureUserIsAdmin::class])
+    ->get('products/export', [ProductController::class, 'export'])
+    ->name('products.export');
+
 Route::apiResource('products', ProductController::class)->only(['index', 'show']);
 
 Route::middleware(['auth:sanctum', EnsureUserIsAdmin::class])
     ->apiResource('products', ProductController::class)
     ->except(['index', 'show']);
 
-Route::middleware('auth:sanctum')
-    ->apiResource('customers', CustomerController::class);
+Route::middleware(['auth:sanctum', EnsureUserIsAdmin::class])->group(function (): void {
+    Route::apiResource('customers', CustomerController::class)->only(['index', 'show', 'update']);
+    Route::apiResource('users', UserController::class)->only(['index', 'show', 'update']);
+});

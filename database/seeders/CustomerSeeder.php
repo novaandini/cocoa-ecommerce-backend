@@ -31,8 +31,6 @@ class CustomerSeeder extends Seeder
                 'id' => $customer[0],
                 'user_id' => $customer[1],
                 'company_name' => $customer[2],
-                'pic_name' => $customer[3],
-                'phone' => $customer[4],
                 'address' => $customer[5],
                 'tax_id' => $customer[6],
                 'allow_public_company_name' => $customer[7],

@@ -29,6 +29,10 @@ class RegisterRequest extends FormRequest
             'email' => ['required', 'email', 'max:255', new Unique('users', 'email')],
             'phone_number' => ['required', 'string', 'max:16'],
             'password' => ['required', 'confirmed', Password::min(8)],
+            'company_name' => ['sometimes', 'string', 'max:255'],
+            'address' => ['sometimes', 'nullable', 'string'],
+            'tax_id' => ['sometimes', 'nullable', 'string', 'max:50'],
+            'allow_public_company_name' => ['sometimes', 'boolean'],
         ];
     }
 }

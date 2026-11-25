@@ -6,9 +6,11 @@ use App\Http\Requests\ForgotPasswordRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\ResetPasswordRequest;
+use App\Http\Resources\CustomerResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
@@ -18,15 +20,32 @@ class AuthController extends Controller
 {
     public function register(RegisterRequest $request): JsonResponse
     {
-        $user = User::create([
-            ...$request->validated(),
-            'role' => 'customer',
-            'is_active' => true,
-        ]);
+        $validated = $request->validated();
+
+        $user = DB::transaction(function () use ($validated): User {
+            $user = User::create([
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'phone_number' => $validated['phone_number'],
+                'password' => $validated['password'],
+                'role' => 'customer',
+                'is_active' => true,
+            ]);
+
+            $user->customer()->create([
+                'company_name' => $validated['company_name'] ?? $validated['name'],
+                'address' => $validated['address'] ?? null,
+                'tax_id' => $validated['tax_id'] ?? null,
+                'allow_public_company_name' => $validated['allow_public_company_name'] ?? false,
+            ]);
+
+            return $user;
+        });
 
         return response()->json([
             'message' => 'Registration successful.',
             'user' => $user,
+            'customer' => new CustomerResource($user->customer),
             'token' => $user->createToken('api')->plainTextToken,
         ], 201);
     }
