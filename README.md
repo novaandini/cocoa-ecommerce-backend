@@ -11,51 +11,80 @@ Laravel API backend for the Cocoa E-commerce application.
 - MySQL 8 or newer
 - Git
 
-### Clone the repository
+### Step-by-Step Cloning & Local Setup
 
-```bash
-git clone https://github.com/novaandini/cocoa-ecommerce-backend.git
-cd cocoa-ecommerce-backend
-```
+1. **Clone the repository**
 
-### Install the application
+   Using HTTPS:
 
-```bash
-composer install
-cp .env.example .env
-php artisan key:generate
-```
+   ```bash
+   git clone https://github.com/novaandini/cocoa-ecommerce-backend.git
+   ```
 
-On Windows PowerShell, copy the environment file with:
+   Or using SSH:
 
-```powershell
-Copy-Item .env.example .env
-```
+   ```bash
+   git clone git@github.com:novaandini/cocoa-ecommerce-backend.git
+   ```
 
-Create a MySQL database named `cocoa_ecommerce`, then update the `DB_*` values in `.env` if your local MySQL credentials differ from the defaults:
+2. **Navigate into the project directory**
 
-```dotenv
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=cocoa_ecommerce
-DB_USERNAME=root
-DB_PASSWORD=
-```
+   ```bash
+   cd cocoa-ecommerce-backend
+   ```
 
-Run the migrations and seed the local database:
+3. **Install PHP dependencies**
 
-```bash
-php artisan migrate --seed
-```
+   ```bash
+   composer install
+   ```
 
-Start the development server:
+4. **Create and configure your environment file**
 
-```bash
-php artisan serve
-```
+   On macOS/Linux:
 
-The API is available at `http://localhost:8000/api`.
+   ```bash
+   cp .env.example .env
+   ```
+
+   On Windows PowerShell:
+
+   ```powershell
+   Copy-Item .env.example .env
+   ```
+
+   Then generate the application key:
+
+   ```bash
+   php artisan key:generate
+   ```
+
+5. **Configure the MySQL database**
+
+   Create a MySQL database named `cocoa_ecommerce`, then update the `DB_*` values in `.env` if your local MySQL credentials differ from the defaults:
+
+   ```dotenv
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=cocoa_ecommerce
+   DB_USERNAME=root
+   DB_PASSWORD=
+   ```
+
+6. **Run migrations and seed the database**
+
+   ```bash
+   php artisan migrate --seed
+   ```
+
+7. **Start the development server**
+
+   ```bash
+   php artisan serve
+   ```
+
+   The API will be available at `http://localhost:8000/api`.
 
 ### Authentication API
 
