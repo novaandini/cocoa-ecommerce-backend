@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BatchController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
@@ -34,4 +35,5 @@ Route::middleware(['auth:sanctum', EnsureUserIsAdmin::class])
 Route::middleware(['auth:sanctum', EnsureUserIsAdmin::class])->group(function (): void {
     Route::apiResource('customers', CustomerController::class)->only(['index', 'show', 'update']);
     Route::apiResource('users', UserController::class)->only(['index', 'show', 'update']);
+    Route::apiResource('batches', BatchController::class);
 });
